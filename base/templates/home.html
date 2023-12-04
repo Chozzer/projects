@@ -2,21 +2,19 @@
 
 {% block content %}
 
+<div class="col-md-6 offset-md-3">
+
+    {% if user.is_authenticated %}
+        this is the home page
+    {% else %}
+        {% include 'login.html' %}
+    {% endif %}
+
+</div>
 
 
 
 
-    <form method="POST" action = "{% url 'home' %}">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-          <label for="Password">Password</label>
-          <input type="password" class="form-control" id="Password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
 
 
 
