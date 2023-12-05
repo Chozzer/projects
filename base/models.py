@@ -8,6 +8,8 @@ class Type(models.Model):
 
 
 
+
+
 class Status(models.Model):
     id = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=64)
@@ -23,11 +25,18 @@ class projects(models.Model):
     completed = models.BooleanField()
     archived = models.BooleanField()
     lastActivity = models.DateField()
+    
 
     def __str__(self):
         return self.name
     
     
+class user_roles(models.Model):
+    userid = models.IntegerField(primary_key=True) #this needs changing to point to the users id field
+    project_id = models.ForeignKey(projects, on_delete=models.CASCADE)
+    role = models.TextField(max_length=32)
+
+
 class notes(models.Model):
     id = models.IntegerField(primary_key=True)
     ref = models.ForeignKey(projects, on_delete=models.CASCADE)
