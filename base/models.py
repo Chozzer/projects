@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Type(models.Model):
+class type(models.Model):
     id = models.IntegerField(primary_key=True)
     type = models.CharField(max_length=64)
 
@@ -10,18 +10,19 @@ class Type(models.Model):
 
 
 
-class Status(models.Model):
+class status(models.Model):
     id = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=64)
 
 
 class projects(models.Model):
     id = models.IntegerField(primary_key=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     parent = models.IntegerField(default=0) # = parent project, else it is a subproject with a parent of parent number
     name = models.CharField(max_length=64)
-    type = models.ForeignKey(Type, on_delete=models.CASCADE) 
+    type = models.ForeignKey(type, on_delete=models.CASCADE) 
     description = models.TextField()
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    status = models.ForeignKey(status, on_delete=models.CASCADE)
     completed = models.BooleanField()
     archived = models.BooleanField()
     lastActivity = models.DateField()
