@@ -15,7 +15,7 @@ class status(models.Model):
     status = models.CharField(max_length=64)
 
 
-class projects(models.Model):
+class project(models.Model):
     id = models.IntegerField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     parent = models.IntegerField(default=0) # = parent project, else it is a subproject with a parent of parent number
@@ -32,35 +32,35 @@ class projects(models.Model):
         return self.name
     
     
-class user_roles(models.Model):
+class user_role(models.Model):
     userid = models.IntegerField(primary_key=True) #this needs changing to point to the users id field
-    project_id = models.ForeignKey(projects, on_delete=models.CASCADE)
+    project_id = models.ForeignKey(project, on_delete=models.CASCADE)
     role = models.TextField(max_length=32)
 
 
-class notes(models.Model):
+class note(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     text = models.TextField()
 
-class links(models.Model):
+class link(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     url = models.CharField(max_length=64)
 
-class tasks(models.Model):
+class task(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     task = models.TextField()
     order = models.IntegerField(unique=True)
 
 
-class documents(models.Model):
+class document(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     doc = models.BinaryField()
 
