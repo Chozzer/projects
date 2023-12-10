@@ -34,25 +34,25 @@ class project(models.Model):
     
 class user_role(models.Model):
     userid = models.IntegerField(primary_key=True) #this needs changing to point to the users id field
-    project_id = models.ForeignKey(projects, on_delete=models.CASCADE)
+    project_id = models.ForeignKey(project, on_delete=models.CASCADE)
     role = models.TextField(max_length=32)
 
 
 class note(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     text = models.TextField()
 
 class link(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     url = models.CharField(max_length=64)
 
 class task(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     task = models.TextField()
     order = models.IntegerField(unique=True)
@@ -60,7 +60,7 @@ class task(models.Model):
 
 class document(models.Model):
     id = models.IntegerField(primary_key=True)
-    ref = models.ForeignKey(projects, on_delete=models.CASCADE)
+    ref = models.ForeignKey(project, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     doc = models.BinaryField()
 
