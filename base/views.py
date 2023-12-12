@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
+from .models import project
 
 
 # Create your views here.
@@ -15,6 +16,7 @@ from .forms import SignUpForm
 
 
 def home(request):
+    projects = project.objects.filter(parent=0)
     if request.method =="POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -26,7 +28,7 @@ def home(request):
             messages.success(request, "There was a problem")
             return redirect("home")
     else:
-        return render(request, 'home.html')
+        return render(request, 'home.html', {'projects': projects})
 #def login_user(request):
     
 
@@ -55,3 +57,13 @@ def register_user(request):
 	return render(request, 'register.html', {'form':form})
 
 
+def project_view(request, pk):
+    if request.user.is_authenticated:
+        result = project.objects.get(id=pk)
+        return render(request, 'project_view.html', {'project': result})
+    
+
+    else:
+         return redirect('home')
+
+    

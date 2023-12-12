@@ -1,12 +1,13 @@
 from django.db import models
 
-# Create your models here.
+
 
 class type(models.Model):
     id = models.IntegerField(primary_key=True)
     type = models.CharField(max_length=64)
 
-
+    def __str__(self):
+        return self.type
 
 
 
@@ -14,18 +15,21 @@ class status(models.Model):
     id = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=64)
 
+    def __str__(self):
+        return self.status
+
 
 class project(models.Model):
     id = models.IntegerField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    parent = models.IntegerField(default=0) # = parent project, else it is a subproject with a parent of parent number
+    parent = models.IntegerField(default=0) # 0 = parent project, else it is a subproject with a parent of parent number
     name = models.CharField(max_length=64)
     type = models.ForeignKey(type, on_delete=models.CASCADE) 
     description = models.TextField()
     status = models.ForeignKey(status, on_delete=models.CASCADE)
     completed = models.BooleanField()
     archived = models.BooleanField()
-    lastActivity = models.DateField()
+    lastActivity = models.DateTimeField()
     
 
     def __str__(self):

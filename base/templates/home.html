@@ -5,7 +5,39 @@
 <div class="col-md-6 offset-md-3">
 
     {% if user.is_authenticated %}
-        this is the home page
+        <br><br>
+        {% if projects %}
+
+        <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Last updated</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            {% for project in projects %}
+            
+            
+                <tr>
+                    <td><a href="{% url 'project_view' pk=project.id %}"> {{ project.name }}</a></td>
+                    <td>{{ project.type }}</td>
+                    <td>{{ project.status }}</td>
+                    <td>{{ project.lastActivity }}</td>
+                </tr>
+            
+            {% endfor %}
+
+        </tbody>
+        </table>
+        {% else %}
+        <p>
+            No projects found
+        </p>
+            {% endif %}
     {% else %}
         {% include 'login.html' %}
     {% endif %}

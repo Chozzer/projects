@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block  content %}
+
+
+{% if project %}
+    <h1>{{ project.name }}</h1><br>
+    {{ project.created_at }}<br>
+    {{ project.description }}<br>
+    {{ project.status }}<br>
+    {{ project.completed }}<br>
+    {{ project.archived }}<br>
+    {{ project.lastActivity }}<br>
+
+
+
+{% else %}
+    nothing to show
+{% endif %}
+
+
+{% endblock %}
