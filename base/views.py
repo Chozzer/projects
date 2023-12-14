@@ -1,8 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.utils import timezone
 from .forms import SignUpForm
-from .models import project
+from .models import project, note, task, link
+
 
 
 # Create your views here.
@@ -60,10 +62,26 @@ def register_user(request):
 def project_view(request, pk):
     if request.user.is_authenticated:
         result = project.objects.get(id=pk)
-        return render(request, 'project_view.html', {'project': result})
-    
-
+        subprojects = project.objects.filter(parent=pk)
+        notes = note.objects.filter(ref=pk)
+        tasks = task.objects.filter(ref=pk)
+        links = link.objects.filter(ref=pk)
+        return render(request, 'project_view.html', {'project': result, 'notes':notes, 'tasks':tasks, 'links':links, 'subprojects': subprojects  })
     else:
-         return redirect('home')
+        return redirect('home')
 
     
+def add_subproject(request, parent):
+     if request.method == "POST":
+        parent = request.POST["parent"]
+        name = request.POST["name"]
+        type = request.POST["type"] 
+        description = request.POST["description"]
+        status = request.POST["status"]
+        completed = False
+        archived = False
+        lastActivity = timezone.now()
+          
+          
+     else:
+        return render(request, 'add_subproject.html' , {'parent':parent})
