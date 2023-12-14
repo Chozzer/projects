@@ -8,7 +8,7 @@ urlpatterns = [
     path("logout/", views.logout_user, name="logout"),
     path("register/", views.register_user, name = "register"),
     path("project/<int:pk>", views.project_view, name = "project_view"),
-    path("add_subproject", views.add_subproject, name="add_subproject")
+    path("add_subproject/<int:parent>", views.add_subproject, name="add_subproject")
 
 
 
