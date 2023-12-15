@@ -32,6 +32,8 @@
     </div>
 <br><br>
 
+
+{% if project.parent == 0 %}
     <div class="container">
       {% if subprojects %}
       <div class="card" style="width: 18rem;">
@@ -40,7 +42,11 @@
         </div>
         <ul class="list-group list-group-flush">
           {% for sub in subprojects %}
-          <li class="list-group-item">{{sub.name }}  {{ sub.status }}  {{ sub.completed }}<br> {{sub.description}} </li>
+          <li class="list-group-item">{{sub.name }}  {{ sub.status }}  
+            <div class="input-group-text">
+              <input class="form-check-input mt-0" type="checkbox" value="{{ sub.completed }}" aria-label="Completed">
+            </div>
+            <br> {{sub.description}} </li>
           {% endfor %}
         </ul>
       </div>       
@@ -52,7 +58,13 @@
       <a href="{% url 'add_subproject' parent=project.id %}" class="btn btn-secondary" >Add subproject</a>
 
     </div>
-<br><br>
+    {% endif %}
+
+
+
+
+
+    <br><br>
     <div class="container">
         {% if tasks %}
             {% for task in tasks %}
@@ -67,6 +79,8 @@
         {% else %}
         <p>No tasks to show</p>
         {% endif %}
+
+        <a href="{% url 'add_task' parent=project.id %}" class="btn btn-secondary">Add Task</a>
     </div>
 
 {% if notes %}

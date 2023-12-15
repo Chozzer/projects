@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils import timezone
+from django.db.models import Max
 from .forms import SignUpForm
 from .models import project, status, note, task, link, type
 
@@ -99,3 +100,22 @@ def add_subproject(request, parent):
         types = type.objects.all()
         pstatus = status.objects.all()
         return render(request, 'add_subproject.html' , {'parent':parent, 'types':types, 'status': pstatus})
+
+def add_task(request, parent):
+    if request.method == "POST":
+        pkref= project.objects.get(pk=parent)
+        ref = pkref.name
+        title = request.POST["title"]
+        new_task = request.POST["task"]
+        #order= task.objects.aggregate(max('order')).get('order__max')
+        next_order = task.objects.aggregate(Max('order')).get('order__max')
+        next_order = next_order +1
+        newtask = task.objects.create(ref_id=pkref.id,
+                                      title=title,
+                                      task=new_task,
+                                      order=next_order)
+        newtask.save
+        return redirect('home')
+        
+    else:
+        return render(request, 'add_task.html', {})

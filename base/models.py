@@ -60,7 +60,8 @@ class task(models.Model):
     title = models.CharField(max_length=64)
     task = models.TextField()
     order = models.IntegerField(unique=True)
-
+    class Meta:
+        get_latest_by = 'order'
 
 class document(models.Model):
     id = models.IntegerField(primary_key=True)
