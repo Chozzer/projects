@@ -107,7 +107,6 @@ def add_task(request, parent):
         ref = pkref.name
         title = request.POST["title"]
         new_task = request.POST["task"]
-        #order= task.objects.aggregate(max('order')).get('order__max')
         next_order = task.objects.aggregate(Max('order')).get('order__max')
         next_order = next_order +1
         newtask = task.objects.create(ref_id=pkref.id,
@@ -119,3 +118,18 @@ def add_task(request, parent):
         
     else:
         return render(request, 'add_task.html', {})
+    
+def add_link(request, parent):
+    if request.method=="POST":
+        pkref= project.objects.get(pk=parent)
+        title=request.POST["title"]
+        url=request.POST["link"]
+        newlink = link.objects.create(ref_id=pkref.id,
+                                        title=title,
+                                        url=url,
+                                        )
+        newlink.save
+        return redirect('home')
+              
+    else:
+        return render(request, 'add_link.html', {})
