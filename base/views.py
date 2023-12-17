@@ -108,13 +108,14 @@ def add_task(request, parent):
         title = request.POST["title"]
         new_task = request.POST["task"]
         pstatus = request.POST["status"]
+        pstatus=status.objects.get(status=pstatus)
         next_order = task.objects.aggregate(Max('order')).get('order__max')
         next_order = next_order +1
         newtask = task.objects.create(ref_id=pkref.id,
                                       title=title,
                                       task=new_task,
                                       order=next_order,
-                                      status=pstatus)
+                                      status_id=pstatus.id)
         newtask.save
         return redirect('home')
         
