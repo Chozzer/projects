@@ -14,7 +14,19 @@
         <textarea id="task" name="task" rows="4" cols="50"></textarea>
       </div>
 
-      <button type="submit" class="btn btn-primary">Add</button>
+    <br><br>
+
+    <div class="mb-3">
+        <label for="status">Status</label>
+        <select id="status" class="form-control" name="status"  required>
+        {% for option in status %}
+            <option>{{ option }}</option>
+        {% endfor %}
+        </select>
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary">Add</button>
 
 
 

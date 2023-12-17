@@ -60,6 +60,7 @@ class task(models.Model):
     title = models.CharField(max_length=64)
     task = models.TextField()
     order = models.IntegerField(unique=True)
+    status = models.ForeignKey(status, on_delete=models.CASCADE)
     class Meta:
         get_latest_by = 'order'
 
