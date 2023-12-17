@@ -32,7 +32,7 @@ def home(request):
             return redirect("home")
     else:
         return render(request, 'home.html', {'projects': projects})
-#def login_user(request):
+
     
 
 
@@ -73,114 +73,142 @@ def project_view(request, pk):
 
 
 def create_project(request):
-     if request.method == "POST":
-        name = request.POST["name"]
-        ptype = request.POST["type"] 
-        result = type.objects.get(type=ptype)
-        pstatus = request.POST["status"]
-        pstatus=status.objects.get(status=pstatus)
-        description = request.POST["description"]
-        completed = False
-        archived = False
-        lastActivity = timezone.now()
-        newproject = project.objects.create( parent = 0, 
-                                            name = name,  
-                                            description = description,  
-                                            completed = completed, 
-                                            archived = archived, 
-                                            lastActivity = lastActivity, 
-                                            type_id = result.id, 
-                                            status_id=pstatus.id)
-        #newproject = project( parent = parent, name = name, type = 1, description = description, status = status, completed = completed, archived = archived, lastActivity = lastActivity)
-        newproject.save
-        return redirect('home')
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            name = request.POST["name"]
+            ptype = request.POST["type"] 
+            result = type.objects.get(type=ptype)
+            pstatus = request.POST["status"]
+            pstatus=status.objects.get(status=pstatus)
+            description = request.POST["description"]
+            completed = False
+            archived = False
+            lastActivity = timezone.now()
+            newproject = project.objects.create( parent = 0, 
+                                                name = name,  
+                                                description = description,  
+                                                completed = completed, 
+                                                archived = archived, 
+                                                lastActivity = lastActivity, 
+                                                type_id = result.id, 
+                                                status_id=pstatus.id)
+            #newproject = project( parent = parent, name = name, type = 1, description = description, status = status, completed = completed, archived = archived, lastActivity = lastActivity)
+            newproject.save
+            return redirect('home')
 
 
-     else:
-        types = type.objects.all()
-        pstatus = status.objects.all()
-        return render(request, 'createproject.html' , {'types':types, 'status': pstatus})
+
+        else:
+            types = type.objects.all()
+            pstatus = status.objects.all()
+            return render(request, 'createproject.html' , {'types':types, 'status': pstatus})
+    
+    else:
+            return redirect('home')
 
 
 
 
 def add_subproject(request, parent):
-     if request.method == "POST":
-        name = request.POST["name"]
-        ptype = request.POST["type"] 
-        result = type.objects.get(type=ptype)
-        pstatus = request.POST["status"]
-        pstatus=status.objects.get(status=pstatus)
-        description = request.POST["description"]
-        completed = False
-        archived = False
-        lastActivity = timezone.now()
-        newproject = project.objects.create( parent = parent, 
-                                            name = name,  
-                                            description = description,  
-                                            completed = completed, 
-                                            archived = archived, 
-                                            lastActivity = lastActivity, 
-                                            type_id = result.id, 
-                                            status_id=pstatus.id)
-        #newproject = project( parent = parent, name = name, type = 1, description = description, status = status, completed = completed, archived = archived, lastActivity = lastActivity)
-        newproject.save
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            name = request.POST["name"]
+            ptype = request.POST["type"] 
+            result = type.objects.get(type=ptype)
+            pstatus = request.POST["status"]
+            pstatus=status.objects.get(status=pstatus)
+            description = request.POST["description"]
+            completed = False
+            archived = False
+            lastActivity = timezone.now()
+            newproject = project.objects.create( parent = parent, 
+                                                name = name,  
+                                                description = description,  
+                                                completed = completed, 
+                                                archived = archived, 
+                                                lastActivity = lastActivity, 
+                                                type_id = result.id, 
+                                                status_id=pstatus.id)
+            #newproject = project( parent = parent, name = name, type = 1, description = description, status = status, completed = completed, archived = archived, lastActivity = lastActivity)
+            newproject.save
+            return redirect('home')
+
+
+        else:
+            types = type.objects.all()
+            pstatus = status.objects.all()
+            return render(request, 'add_subproject.html' , {'parent':parent, 'types':types, 'status': pstatus})
+    else:
         return redirect('home')
+    
 
 
-     else:
-        types = type.objects.all()
-        pstatus = status.objects.all()
-        return render(request, 'add_subproject.html' , {'parent':parent, 'types':types, 'status': pstatus})
 
 def add_task(request, parent):
-    if request.method == "POST":
-        pkref= project.objects.get(pk=parent)
-        ref = pkref.name
-        title = request.POST["title"]
-        new_task = request.POST["task"]
-        pstatus = request.POST["status"]
-        pstatus=status.objects.get(status=pstatus)
-        next_order = task.objects.aggregate(Max('order')).get('order__max')
-        next_order = next_order +1
-        newtask = task.objects.create(ref_id=pkref.id,
-                                      title=title,
-                                      task=new_task,
-                                      order=next_order,
-                                      status_id=pstatus.id)
-        newtask.save
-        return redirect('home')
-        
-    else:
-        pstatus= status.objects.all()
-        return render(request, 'add_task.html', {'status':pstatus})
-    
-def add_link(request, parent):
-    if request.method=="POST":
-        pkref= project.objects.get(pk=parent)
-        title=request.POST["title"]
-        url=request.POST["link"]
-        newlink = link.objects.create(ref_id=pkref.id,
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            pkref= project.objects.get(pk=parent)
+            ref = pkref.name
+            title = request.POST["title"]
+            new_task = request.POST["task"]
+            pstatus = request.POST["status"]
+            pstatus=status.objects.get(status=pstatus)
+            next_order = task.objects.aggregate(Max('order')).get('order__max')
+            next_order = next_order +1
+            newtask = task.objects.create(ref_id=pkref.id,
                                         title=title,
-                                        url=url,
-                                        )
-        newlink.save
-        return redirect('home')
-              
+                                        task=new_task,
+                                        order=next_order,
+                                        status_id=pstatus.id)
+            newtask.save
+            return redirect('home')
+            
+        else:
+            pstatus= status.objects.all()
+            return render(request, 'add_task.html', {'status':pstatus})
     else:
-        return render(request, 'add_link.html', {})
+        return redirect('home')
+    
+
+
+
+
+
+def add_link(request, parent):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            pkref= project.objects.get(pk=parent)
+            title=request.POST["title"]
+            url=request.POST["link"]
+            newlink = link.objects.create(ref_id=pkref.id,
+                                            title=title,
+                                            url=url,
+                                            )
+            newlink.save
+            return redirect('home')
+                
+        else:
+            return render(request, 'add_link.html', {})
+    else:
+        return redirect('home')
+    
+
     
 def add_note(request, parent):
-    if request.method=="POST":
-        pkref= project.objects.get(pk=parent)
-        title=request.POST["title"]
-        text=request.POST["text"]
-        newnote = note.objects.create(ref_id=pkref.id,
-                                        title=title,
-                                        text=text,
-                                        )
-        newnote.save
-        return redirect('home')
-              
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            pkref= project.objects.get(pk=parent)
+            title=request.POST["title"]
+            text=request.POST["text"]
+            newnote = note.objects.create(ref_id=pkref.id,
+                                            title=title,
+                                            text=text,
+                                            )
+            newnote.save
+            return redirect('home')
+                
+        else:
+            return render(request, 'add_note.html', {})
+    
     else:
-        return render(request, 'add_note.html', {})
+        return redirect('home')
