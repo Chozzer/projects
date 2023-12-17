@@ -71,7 +71,39 @@ def project_view(request, pk):
     else:
         return redirect('home')
 
-    
+
+def create_project(request):
+     if request.method == "POST":
+        name = request.POST["name"]
+        ptype = request.POST["type"] 
+        result = type.objects.get(type=ptype)
+        pstatus = request.POST["status"]
+        pstatus=status.objects.get(status=pstatus)
+        description = request.POST["description"]
+        completed = False
+        archived = False
+        lastActivity = timezone.now()
+        newproject = project.objects.create( parent = 0, 
+                                            name = name,  
+                                            description = description,  
+                                            completed = completed, 
+                                            archived = archived, 
+                                            lastActivity = lastActivity, 
+                                            type_id = result.id, 
+                                            status_id=pstatus.id)
+        #newproject = project( parent = parent, name = name, type = 1, description = description, status = status, completed = completed, archived = archived, lastActivity = lastActivity)
+        newproject.save
+        return redirect('home')
+
+
+     else:
+        types = type.objects.all()
+        pstatus = status.objects.all()
+        return render(request, 'createproject.html' , {'types':types, 'status': pstatus})
+
+
+
+
 def add_subproject(request, parent):
      if request.method == "POST":
         name = request.POST["name"]

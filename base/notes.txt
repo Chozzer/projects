@@ -1,3 +1,5 @@
 
 tasks:
 add create_project page and functionality
+
+ensure that login is checked on every page. 

@@ -120,7 +120,7 @@
   {% endfor %}
 
 {% else %}
-This project has no links
+<p>This project has no links</p>
 {% endif %}
 <a href="{% url 'add_link' parent=project.id %}" class="btn btn-secondary">Add Link</a>
 </div>

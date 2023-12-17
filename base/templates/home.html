@@ -38,6 +38,8 @@
             No projects found
         </p>
             {% endif %}
+
+            <a href="{% url 'create_project' %}" class="btn btn-secondary">Add New Project</a>
     {% else %}
         {% include 'login.html' %}
     {% endif %}
