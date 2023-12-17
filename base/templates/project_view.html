@@ -122,5 +122,6 @@
 {% else %}
 This project has no links
 {% endif %}
+<a href="{% url 'add_link' parent=project.id %}" class="btn btn-secondary">Add Link</a>
 </div>
 {% endblock %}
