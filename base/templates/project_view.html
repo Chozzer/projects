@@ -101,12 +101,12 @@
       </div>
     </div>        
     {% endfor %}
-</div>
+
 {% else %}
     This project has no notes
 {% endif %}
-
-
+<a href="{% url 'add_note' parent=project.id %}" class="btn btn-secondary">Add Note</a>
+</div>
 
 <div class="container"></div>
 {% if links %}

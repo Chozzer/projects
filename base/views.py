@@ -169,3 +169,18 @@ def add_link(request, parent):
               
     else:
         return render(request, 'add_link.html', {})
+    
+def add_note(request, parent):
+    if request.method=="POST":
+        pkref= project.objects.get(pk=parent)
+        title=request.POST["title"]
+        text=request.POST["text"]
+        newnote = note.objects.create(ref_id=pkref.id,
+                                        title=title,
+                                        text=text,
+                                        )
+        newnote.save
+        return redirect('home')
+              
+    else:
+        return render(request, 'add_note.html', {})
