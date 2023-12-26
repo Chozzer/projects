@@ -212,3 +212,29 @@ def add_note(request, parent):
     
     else:
         return redirect('home')
+    
+
+def add_type(request):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            posted_type = request.POST["type"]
+            newtype = type.objects.create(type=posted_type)
+            newtype.save
+        else:
+            types  = type.objects.all()
+            return render(request, "add_type.html", {'types':types})
+    return redirect('home')
+    
+
+def add_status(request):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            posted_status = request.POST["status"]
+            newstatus = status.objects.create(status=posted_status)
+            newstatus.save
+            
+        else:
+            statuses  = status.objects.all()
+            return render(request, "add_status.html", {'statuses':statuses})
+
+    return redirect('home')

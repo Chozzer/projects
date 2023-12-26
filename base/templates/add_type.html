@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if types %}
+    {% for type in types %}
+                
+                
+    <tr>
+        
+        <td>{{ type.type }}</td>
+
+    </tr>
+
+    {% endfor %}
+
+    {{else}}
+    <p>
+        no types to show
+    </p>
+
+{% endif %}
+
+
+<form method = "POST" action = "">
+{% csrf_token %}
+    <div class="mb-3">
+        <label for="type">Type</label>
+        <input type="text" class="form-control" name="type" placeholder="type" required>
+    </div>
+
+
+
+    <br><br>
+
+
+
+    
+    <button type="submit" class="btn btn-primary">Add</button>
+
+
+
+</form>
+
+{% endblock %}

@@ -12,7 +12,9 @@ urlpatterns = [
     path("add_task/<int:parent>", views.add_task, name='add_task'),
     path("add_link/<int:parent>", views.add_link, name="add_link"),
     path("add_note/<int:parent>", views.add_note, name="add_note"),
-    path("create_project/", views.create_project, name="create_project")
+    path("create_project/", views.create_project, name="create_project"),
+    path("add_type", views.add_type, name="add_type"),
+    path("add_status", views.add_status, name="add_status")
 
 
 

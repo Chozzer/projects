@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if types %}
+    {% for status in statuses %}
+                
+                
+    <tr>
+        
+        <td>{{ status.status }}</td>
+
+    </tr>
+
+    {% endfor %}
+
+    {{else}}
+    <p>
+        no statuses to show
+    </p>
+    
+{% endif %}
+
+
+<form method = "POST" action = "">
+{% csrf_token %}
+    <div class="mb-3">
+        <label for="type">Status</label>
+        <input type="text" class="form-control" name="status" placeholder="status" required>
+    </div>
+
+
+
+    <br><br>
+
+
+
+    
+    <button type="submit" class="btn btn-primary">Add</button>
+
+
+
+</form>
+
+{% endblock %}
