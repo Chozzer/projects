@@ -8,15 +8,6 @@ from .models import project, status, note, task, link, type
 
 
 
-# Create your views here.
-
-#home page. 
-# if not logged in, will display login
-# if request = post will process login
-# else will list all current projects
-
-
-
 
 def home(request):
     projects = project.objects.filter(parent=0)
@@ -105,6 +96,9 @@ def create_project(request):
     
     else:
             return redirect('home')
+    
+def edit_project(request):
+    pass
 
 
 
@@ -144,30 +138,7 @@ def add_subproject(request, parent):
 
 
 
-def add_task(request, parent):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            pkref= project.objects.get(pk=parent)
-            ref = pkref.name
-            title = request.POST["title"]
-            new_task = request.POST["task"]
-            pstatus = request.POST["status"]
-            pstatus=status.objects.get(status=pstatus)
-            next_order = task.objects.aggregate(Max('order')).get('order__max')
-            next_order = next_order +1
-            newtask = task.objects.create(ref_id=pkref.id,
-                                        title=title,
-                                        task=new_task,
-                                        order=next_order,
-                                        status_id=pstatus.id)
-            newtask.save
-            return redirect('home')
-            
-        else:
-            pstatus= status.objects.all()
-            return render(request, 'add_task.html', {'status':pstatus})
-    else:
-        return redirect('home')
+
     
 
 
