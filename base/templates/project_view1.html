@@ -67,10 +67,9 @@
             {% for task in tasks %}
             <div class="container">
                 <p>
-                  <a href="{% url 'display_task' req_task=task.id %}"> 
-                <strong>{{ task.title }}</strong></a>
+                <strong>{{ task.title }}</strong>
                 <br><br>
-                
+                {{ task.task}}
             </p>
             </div>
             {% endfor %}

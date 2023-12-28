@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if task %}
+        <p>
+        <div class="container">
+        
+        <h4>Name:</h4>
+            {{ task.title }}
+        </div>
+        </p>
+        
+        <p>
+        <div class="container"></div>
+            <h4>Task:</h4>
+            {{ task.task }}
+        </div>
+        </p>
+
+        <p>
+        <div class="container">
+            <h4>Status:</h4>
+            {{ task.status }}
+        </div>
+        </p>
+   
+
+        <a href="{% url 'edit_task' req_task=task.id %}" class="btn btn-secondary">Edit this task</a>
+        <a href="{% url 'delete_task' req_task=task.id %}" class="btn btn-secondary">Delete this task</a>
+
+
+    {% endif %}
+
+{% endblock %}
