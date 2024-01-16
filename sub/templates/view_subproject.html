@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if sub %}
+
+
+<h1>{{ sub.name }}</h1>
+    
+
+
+
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <p>
+            {{ sub.description }}
+            </p>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">     
+                Status: {{ sub.status }}
+            </div>     
+            <div class="col">     
+                 Completed :{{ sub.completed }}
+            </div>  
+            <div class="col">     
+                Last Activity: {{ sub.lastActivity }}
+            </div>  
+
+          </div>
+
+        </div>
+    </div>
+<br>
+
+<a href="{% url 'add_task' parent=sub.id %}" class="btn btn-secondary">Edit this subproject</a>
+
+<br><br>
+<div class="container" width="%100">
+    {% if tasks %}
+    <div class="card" >
+      <div class="card-header">
+        Tasks
+        </div>
+        {% for task in tasks %}
+        <div class="container">
+            <p>
+              <a href="{% url 'display_task' req_task=task.id %}"> 
+            <strong>{{ task.title }}</strong></a>
+            <br>
+            
+        </p>
+        </div>
+        {% endfor %}
+        </div>
+    {% else %}
+    <p>No tasks to show</p>
+    {% endif %}
+
+    <a href="{% url 'add_task' parent=sub.id %}" class="btn btn-secondary">Add Task</a>
+</div>
+
+<br><br>
+<div class="container" width="%100">
+{% if notes %}
+  <div class="card" >
+      <div class="card-header">
+        Notes
+        </div>
+        {% for note in notes %}
+
+            
+        <div class="container">
+            <p>
+              {{ note.title }}
+              {{ note.text }}
+            </p>
+        </div>            
+        {% endfor %}
+    </div>
+    {% else %}
+        This project has no notes
+    {% endif %}
+   <br>
+    <a href="{% url 'add_note' parent=sub.id %}" class="btn btn-secondary">Add Note</a>
+  </div>
+
+
+
+  
+<br><br>
+  <div class="container">
+{% if links %}
+<div class="card" >
+<div class="card-header">
+  Links
+  </div>
+{% for link in links %}
+  <div class="container">
+    <p>
+      <a href="{{ link.url }}" target = "_blank" rel="noopener noreferrer" >{{ link.title }}</a>
+    </p>
+  </div>
+
+{% endfor %}
+</div>
+{% else %}
+<p>This project has no links</p>
+{% endif %}
+<a href="{% url 'add_link' parent=sub.id %}" class="btn btn-secondary" width="20">Add Link</a>
+</div>
+
+{% endif %}
+{% endblock %}
