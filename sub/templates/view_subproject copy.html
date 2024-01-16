@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if sub %}
+
+
+<h1>{{ sub.name }}</h1>
+    
+
+<h1>{{ project.name }}</h1><br>
+
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <p>
+            {{ sub.description }}
+            </p>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">     
+                Status: {{ sub.status }}
+            </div>     
+            <div class="col">     
+                 Completed :{{ sub.completed }}
+            </div>  
+            <div class="col">     
+                Last Activity: {{ sub.lastActivity }}
+            </div>  
+
+          </div>
+
+        </div>
+    </div>
+<br><br>
+
+
+
+<br><br>
+<div class="container" width="%100">
+    {% if tasks %}
+        {% for task in tasks %}
+        <div class="container">
+            <p>
+              <a href="{% url 'display_task' req_task=task.id %}"> 
+            <strong>{{ task.title }}</strong></a>
+            <br>
+            
+        </p>
+        </div>
+        {% endfor %}
+    {% else %}
+    <p>This subproject has no tasks</p>
+    {% endif %}
+
+    <a href="{% url 'add_task' parent=sub.id %}" class="btn btn-secondary">Add Task</a>
+</div>
+
+{% if notes %}
+<div class="accordion" id="accordionExample" width="%100">
+{% for note in notes %}
+<div class="accordion-item">
+    
+  <h2 class="accordion-header">
+    
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{note.id}}" aria-expanded="true" aria-controls="collapseOne">
+        {{ note.title }}
+    </button>
+  </h2>
+  <div id="collapse{{note.id}}" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        {{ note.text }}
+    </div>
+  </div>
+</div>        
+{% endfor %}
+
+{% else %}
+This Subproject has no notes
+{% endif %}
+<br>
+<a href="{% url 'add_note' parent=sub.id %}" class="btn btn-secondary">Add Note</a>
+</div>
+
+<div class="container">
+{% if links %}
+{% for link in links %}
+  <div class="container">
+    <p>
+      <a href="{{ link.url }}" target = "_blank" rel="noopener noreferrer" >{{ link.title }}</a>
+    </p>
+  </div>
+
+{% endfor %}
+{% else %}
+<p>This Subproject has no links</p>
+{% endif %}
+
+
+
+<a href="{% url 'add_link' parent=sub.id %}" class="btn btn-secondary">Add Link</a>
+</div>
+
+
+<a href="{% url 'edit_sub' pk=sub.id %}" class="btn btn-secondary">Edit this Subproject</a>
+<a href="{% url 'delete_sub' pk=sub.id %}" class="btn btn-secondary">Delete this Subproject</a>
+
+
+
+{% endif %}
+
+
+
+{% endblock %}
