@@ -8,13 +8,13 @@
 
     <div class="mb-3">
         <label for="username">Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Name" required>
+        <input type="text" class="form-control" name="name" placeholder="Name" value={{project.name}} required>
       </div>
 
 
       <div class="mb-3">
         <label for="description">Description</label>
-        <textarea id="description" name="description" rows="4" cols="50"></textarea>
+        <textarea id="description" name="description" rows="4" cols="50">{{project.description}}</textarea>
         
       </div>
 
@@ -26,8 +26,12 @@
   <div class="mb-3">
     <label for="type">Type</label>
     <select id="type" class="form-control" name="type"  required>
-    {% for option in types %}
-        <option>{{ option }}</option>
+      {% for option in type %}            
+      {% if option == project.type %}
+      <option selected>{{ option }}</option>
+      {% else %}
+          <option>{{ option }}</option>
+        {% endif %}
     {% endfor %}
 </select>
  
@@ -39,14 +43,18 @@
 <div class="mb-3">
 <label for="status">Status</label>
 <select id="status" class="form-control" name="status"  required>
-{% for option in status %}
-    <option>{{ option }}</option>
+  {% for option in status %}            
+  {% if option == project.status %}
+  <option selected>{{ option }}</option>
+  {% else %}
+      <option>{{ option }}</option>
+    {% endif %}
 {% endfor %}
 </select>
 
 </div>
 
-      <button type="submit" class="btn btn-primary">Add</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
 

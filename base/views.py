@@ -97,8 +97,27 @@ def create_project(request):
     else:
             return redirect('home')
     
-def edit_project(request):
-    pass
+def edit_project(request, pk):
+    if request.user.is_authenticated:
+        if request.method=="POST":
+            posted_status = request.POST["status"]
+            newstatus=status.objects.get(status=posted_status)
+            posted_type = request.POST["type"]
+            newtype = type.objects.get(type = posted_type)
+            subproject = project.objects.get(id=pk)
+            subproject.name = request.POST["name"]
+            subproject.description = request.POST["description"]
+            subproject.type_id = newtype.id
+            subproject.status_id = newstatus.id
+            subproject.save
+        else:
+            project_to_edit = project.objects.get(pk= pk)
+            pstatus= status.objects.all()
+            ptype = type.objects.all()
+            return render(request, "edit_project.html", {"project":project_to_edit, "status":pstatus, "type":ptype })
+
+    else:
+        return redirect('home')
 
 
 
