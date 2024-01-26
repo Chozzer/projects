@@ -52,16 +52,22 @@ def add_sub(request, parent):
 
 def edit_sub(request, pk):
     if request.user.is_authenticated:
-        posted_status = request.POST["status"]
-        newstatus=status.objects.get(status=posted_status)
-        posted_type = request.POST["type"]
-        newtype = type.objects.get(type = posted_type)
-        subproject = project.objects.get(id=pk)
-        subproject.name = request.POST["name"]
-        subproject.description = request.POST["description"]
-        subproject.type_id = newtype.id
-        subproject.status_id = newstatus.id
-        subproject.save
+        if request.method=="POST":
+            posted_status = request.POST["status"]
+            newstatus=status.objects.get(status=posted_status)
+            posted_type = request.POST["type"]
+            newtype = type.objects.get(type = posted_type)
+            subproject = project.objects.get(id=pk)
+            subproject.name = request.POST["name"]
+            subproject.description = request.POST["description"]
+            subproject.type_id = newtype.id
+            subproject.status_id = newstatus.id
+            subproject.save
+        else:
+            sub_to_edit = project.objects.get(pk= pk)
+            pstatus= status.objects.all()
+            ptype = type.objects.all()
+            return render(request, "edit_subproject.html", {"sub":sub_to_edit, "status":pstatus, "type":ptype })
         
         
         return redirect('home')

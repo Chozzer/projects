@@ -7,14 +7,14 @@
     {% csrf_token %}
 
     <div class="mb-3">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Name" value="{{sub.name}}" required>
+        <label for="username">Name</label>
+        <input type="text" class="form-control" name="name" placeholder="Name" required>
       </div>
 
 
       <div class="mb-3">
         <label for="description">Description</label>
-        <textarea id="description" name="description" rows="4" cols="50">{{sub.description}}</textarea>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea>
         
       </div>
 
@@ -25,13 +25,9 @@
 
   <div class="mb-3">
     <label for="type">Type</label>
-    <select id="type" class="form-control" name="type"  required >
-    {% for option in type %}            
-      {% if option == sub.type %}
-      <option selected>{{ option }}</option>
-      {% else %}
-          <option>{{ option }}</option>
-        {% endif %}
+    <select id="type" class="form-control" name="type"  required>
+    {% for option in types %}
+        <option>{{ option }}</option>
     {% endfor %}
 </select>
  
@@ -44,11 +40,7 @@
 <label for="status">Status</label>
 <select id="status" class="form-control" name="status"  required>
 {% for option in status %}
-{% if option == sub.status %}
-<option selected>{{ option }}</option>
-{% else %}
     <option>{{ option }}</option>
-    {% endif %}
 {% endfor %}
 </select>
 
