@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     "base",
     "tasks",
     "sub",
+    "notes",
+    "links",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

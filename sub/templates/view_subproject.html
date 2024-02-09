@@ -74,8 +74,8 @@
             
         <div class="container">
             <p>
-              {{ note.title }}
-              {{ note.text }}
+              <a href="{% url 'display_note' req_note=note.id %}"> 
+             <strong> {{ note.title }}</strong>  </a>
             </p>
         </div>            
         {% endfor %}
@@ -83,8 +83,8 @@
     {% else %}
         This project has no notes
     {% endif %}
-   <br>
-    <a href="{% url 'add_note' parent=sub.id %}" class="btn btn-secondary">Add Note</a>
+   
+    <a href="{% url 'add_note' parent=project.id %}" class="btn btn-secondary">Add Note</a>
   </div>
 
 
@@ -100,7 +100,7 @@
 {% for link in links %}
   <div class="container">
     <p>
-      <a href="{{ link.url }}" target = "_blank" rel="noopener noreferrer" >{{ link.title }}</a>
+      <a href="{{ link.url }}" target = "_blank" rel="noopener noreferrer" >{{ link.title }}</a> <a href="{% url 'delete_link' link_id=link.id %}"> Delete</a>
     </p>
   </div>
 

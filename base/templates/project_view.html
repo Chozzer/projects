@@ -102,8 +102,8 @@
                 
             <div class="container">
                 <p>
-                  {{ note.title }}
-                  {{ note.text }}
+                  <a href="{% url 'display_note' req_note=note.id %}"> 
+                 <strong> {{ note.title }}</strong>  </a>
                 </p>
             </div>            
             {% endfor %}
@@ -128,7 +128,7 @@
     {% for link in links %}
       <div class="container">
         <p>
-          <a href="{{ link.url }}" target = "_blank" rel="noopener noreferrer" >{{ link.title }}</a>
+          <a href="{{ link.url }}" target = "_blank" rel="noopener noreferrer" >{{ link.title }}</a> <a href="{% url 'delete_link' link_id=link.id %}"> Delete</a>
         </p>
       </div>
 

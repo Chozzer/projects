@@ -22,4 +22,6 @@ urlpatterns = [
     path("", include ("base.urls")),
     path("tasks/", include ("tasks.urls")),
     path("sub/", include ("sub.urls")),
+    path("notes/", include ("notes.urls")),
+    path("links/", include ('links.urls')),
 ]

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if note %}
+        <p>
+        <div class="container">
+        
+        <h4>Name:</h4>
+            {{ note.title }}
+        </div>
+        </p>
+        
+        <p>
+        <div class="container"></div>
+            <h4>Task:</h4>
+            {{ note.text }}
+        </div>
+        </p>
+
+
+   
+
+        <a href="{% url 'edit_note' req_note=note.id %}" class="btn btn-secondary">Edit this note</a>
+        <a href="{% url 'delete_note' req_note=note.id %}" class="btn btn-secondary">Delete this note</a>
+
+
+    {% endif %}
+
+{% endblock %}

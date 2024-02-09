@@ -121,57 +121,10 @@ def edit_project(request, pk):
 
 
 
-
-
-    
-
-
-
-
-    
-
-
-
-
-
-def add_link(request, parent):
-    if request.user.is_authenticated:
-        if request.method=="POST":
-            pkref= project.objects.get(pk=parent)
-            title=request.POST["title"]
-            url=request.POST["link"]
-            newlink = link.objects.create(ref_id=pkref.id,
-                                            title=title,
-                                            url=url,
-                                            )
-            newlink.save
-            return redirect('home')
-                
-        else:
-            return render(request, 'add_link.html', {})
-    else:
-        return redirect('home')
     
 
     
-def add_note(request, parent):
-    if request.user.is_authenticated:
-        if request.method=="POST":
-            pkref= project.objects.get(pk=parent)
-            title=request.POST["title"]
-            text=request.POST["text"]
-            newnote = note.objects.create(ref_id=pkref.id,
-                                            title=title,
-                                            text=text,
-                                            )
-            newnote.save
-            return redirect('home')
-                
-        else:
-            return render(request, 'add_note.html', {})
-    
-    else:
-        return redirect('home')
+
     
 
 def add_type(request):
